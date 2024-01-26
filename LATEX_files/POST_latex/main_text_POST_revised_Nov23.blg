@@ -1,0 +1,25 @@
+[0] Config.pm:306> INFO - This is Biber 2.18
+[1] Config.pm:309> INFO - Logfile is 'main_text_POST_revised_Nov23.blg'
+[149] biber-MSWIN64:340> INFO - === 
+[204] Biber.pm:418> INFO - Reading 'main_text_POST_revised_Nov23.bcf'
+[433] Biber.pm:978> INFO - Found 108 citekeys in bib section 0
+[460] Biber.pm:4401> INFO - Processing section 0
+[477] Biber.pm:4592> INFO - Looking for bibtex file 'ref4.bib' for section 0
+[555] bibtex.pm:1713> INFO - LaTeX decoding ...
+[784] bibtex.pm:1518> INFO - Found BibTeX data source 'ref4.bib'
+[1811] UCollate.pm:68> INFO - Overriding locale 'en-US' defaults 'variable = shifted' with 'variable = non-ignorable'
+[1812] UCollate.pm:68> INFO - Overriding locale 'en-US' defaults 'normalization = NFD' with 'normalization = prenormalized'
+[1813] Biber.pm:4221> INFO - Sorting list 'apa/apasortcite//global/global' of type 'entry' with template 'apa' and locale 'en-US'
+[1814] Biber.pm:4227> INFO - No sort tailoring available for locale 'en-US'
+[2103] UCollate.pm:68> INFO - Overriding locale 'en-US' defaults 'variable = shifted' with 'variable = non-ignorable'
+[2104] UCollate.pm:68> INFO - Overriding locale 'en-US' defaults 'normalization = NFD' with 'normalization = prenormalized'
+[2105] Biber.pm:4221> INFO - Sorting list 'apa/global//global/global' of type 'entry' with template 'apa' and locale 'en-US'
+[2105] Biber.pm:4227> INFO - No sort tailoring available for locale 'en-US'
+[2282] bbl.pm:654> INFO - Writing 'main_text_POST_revised_Nov23.bbl' with encoding 'UTF-8'
+[2513] bbl.pm:757> INFO - Output to main_text_POST_revised_Nov23.bbl
+[2514] Biber.pm:130> WARN - Duplicate entry key: 'shapiro2000energy' in file 'ref4.bib', skipping ...
+[2515] Biber.pm:130> WARN - Duplicate entry key: 'boddice2019quantifying' in file 'ref4.bib', skipping ...
+[2515] Biber.pm:130> WARN - Duplicate entry key: 'sollberger2023efficient' in file 'ref4.bib', skipping ...
+[2516] Biber.pm:130> WARN - Duplicate entry key: 'lax1964difference' in file 'ref4.bib', skipping ...
+[2516] Biber.pm:130> WARN - Duplicate entry key: 'sollberger2023efficient' in file 'ref4.bib', skipping ...
+[2517] Biber.pm:132> INFO - WARNINGS: 5
