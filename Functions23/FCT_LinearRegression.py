@@ -6,7 +6,7 @@
 #       extension: .py
 #       format_name: light
 #       format_version: '1.5'
-#       jupytext_version: 1.14.0
+#       jupytext_version: 1.15.1
 #   kernelspec:
 #     display_name: Python 3 (ipykernel)
 #     language: python
@@ -42,33 +42,6 @@ def LinReg_c3D(acc_internal,dttv_internal, nt_sub, ll, N_internal, nrx, nry, nrz
     c_phase = np.reshape(c_phase, (nrx,nry,nrz,ll))
     m = np.reshape(m, (nrx,nry,nrz,ll))
     r_sq = np.reshape(r_sq, (nrx,nry,nrz,ll))
-    
-    return c_phase, m, r_sq
-
-
-def LinReg_c(acc_internal,dttv_internal, nt_sub, ll, N_internal, nrx, nry, nrz,order):
-      
-    acc_internal = np.reshape(acc_internal,(N_internal, nt_sub,ll))
-    dttv_internal = np.reshape(dttv_internal,(N_internal, nt_sub,ll))
-
-    model = LinearRegression()
-    m    = np.zeros((nrx-order, nry-order, nrz-order))
-    r_sq = np.zeros((nrx-order, nry-order, nrz-order))
-
-    c_phase = np.zeros((N_internal, ll))
-    m = np.zeros((N_internal, ll))
-    r_sq = np.zeros((N_internal, ll))
-    for fi in range(ll):
-        for i in range(N_internal):
-            model.fit(acc_internal[i,:,fi].reshape(-1, 1), dttv_internal[i,:,fi].reshape(-1, 1))
-            r_sq[i,fi]  = model.score((acc_internal[i,:,fi]).reshape(-1, 1), dttv_internal[i,:,fi].reshape(-1, 1))
-            inter       = model.intercept_
-            m[i,fi]     = model.coef_
-            c_phase[i,fi] = np.sqrt(np.abs(m[i,fi]))
-    
-    c_phase = np.reshape(c_phase, (nrx-order,nry-order,nrz-order,ll))
-    m = np.reshape(m, (nrx-order,nry-order,nrz-order,ll))
-    r_sq = np.reshape(r_sq, (nrx-order,nry-order,nrz-order,ll))
     
     return c_phase, m, r_sq
 
@@ -125,6 +98,33 @@ def LinReg_rho_surf(acc_internal,dttv_internal, nt_sub, ll, N_internal, nrx, nry
     r_sq = np.reshape(r_sq, (nrx-order,nry-order,ll))
     
     return rho_ratio, m, r_sq
+
+
+def LinReg_c(acc_internal,dttv_internal, nt_sub, ll, N_internal, nrx, nry, nrz,order):
+      
+    acc_internal = np.reshape(acc_internal,(N_internal, nt_sub,ll))
+    dttv_internal = np.reshape(dttv_internal,(N_internal, nt_sub,ll))
+
+    model = LinearRegression()
+    m    = np.zeros((nrx-order, nry-order, nrz-order))
+    r_sq = np.zeros((nrx-order, nry-order, nrz-order))
+
+    c_phase = np.zeros((N_internal, ll))
+    m = np.zeros((N_internal, ll))
+    r_sq = np.zeros((N_internal, ll))
+    for fi in range(ll):
+        for i in range(N_internal):
+            model.fit(acc_internal[i,:,fi].reshape(-1, 1), dttv_internal[i,:,fi].reshape(-1, 1))
+            r_sq[i,fi]  = model.score((acc_internal[i,:,fi]).reshape(-1, 1), dttv_internal[i,:,fi].reshape(-1, 1))
+            inter       = model.intercept_
+            m[i,fi]     = model.coef_
+            c_phase[i,fi] = np.sqrt(np.abs(m[i,fi]))
+    
+    c_phase = np.reshape(c_phase, (nrx-order,nry-order,nrz-order,ll))
+    m = np.reshape(m, (nrx-order,nry-order,nrz-order,ll))
+    r_sq = np.reshape(r_sq, (nrx-order,nry-order,nrz-order,ll))
+    
+    return c_phase, m, r_sq
 
 
 def LinReg_c2(acc_internal,dttv_internal, nt_sub, ll, N_internal, nrx, nry, nrz,order):

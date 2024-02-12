@@ -6,7 +6,7 @@
 #       extension: .py
 #       format_name: light
 #       format_version: '1.5'
-#       jupytext_version: 1.14.0
+#       jupytext_version: 1.15.1
 #   kernelspec:
 #     display_name: Python 3 (ipykernel)
 #     language: python
@@ -16,7 +16,7 @@
 import numpy as np
 
 
-def dttv(DAT_Z, dt, nt, order):
+def dttv_ACC(DAT_Z, dt, nt, order):
     dttv3 = np.zeros((DAT_Z.shape))
    
     if order == 2:
@@ -34,7 +34,7 @@ def dttv(DAT_Z, dt, nt, order):
     return dttv3
 
 
-def _1st_DER(FIELD_Z, dx, dy, dz, nrx, nry, nrz,order):
+def _1st_DER_ACC(FIELD_Z, dx, dy, dz, nrx, nry, nrz,order):
     ## Initialize Gradients
    
     FIELD_Z_gradX = np.zeros(FIELD_Z.shape)
@@ -66,7 +66,7 @@ def _1st_DER(FIELD_Z, dx, dy, dz, nrx, nry, nrz,order):
     return FIELD_Z_gradX, FIELD_Z_gradY, FIELD_Z_gradZ
 
 
-def _2nd_DER(FIELD_Z, dx, dy, dz, nrx, nry, nrz, order):
+def _2nd_DER_ACC(FIELD_Z, dx, dy, dz, nrx, nry, nrz, order):
     ## Initialize Gradients
    
     FIELD_Z_gradXX = np.zeros(FIELD_Z.shape)
@@ -154,73 +154,6 @@ def _2nd_DER(FIELD_Z, dx, dy, dz, nrx, nry, nrz, order):
         
     return FIELD_Z_gradXX, FIELD_Z_gradYY, FIELD_Z_gradZZ,  FIELD_Z_gradXY, FIELD_Z_gradYX, FIELD_Z_gradYZ, FIELD_Z_gradXZ
 
-# +
-# def ROT_2nd_DER(FIELD_Xx,FIELD_Xy,FIELD_Xz, FIELD_Yx,FIELD_Yy, FIELD_Yz, FIELD_Zx, FIELD_Zy, FIELD_Zz, dx, dy, dz, nrx, nry, nrz):
-#     ## Initialize Gradients
-#     FIELD_X_gradXX = np.zeros(FIELD_Zz.shape)
-#     FIELD_Y_gradXX = np.zeros(FIELD_Zz.shape)
-#     FIELD_Z_gradXX = np.zeros(FIELD_Zz.shape)
-
-#     FIELD_X_gradYY = np.zeros(FIELD_Zz.shape)
-#     FIELD_Y_gradYY = np.zeros(FIELD_Zz.shape)
-#     FIELD_Z_gradYY = np.zeros(FIELD_Zz.shape)
-
-#     FIELD_X_gradZZ = np.zeros(FIELD_Zz.shape)
-#     FIELD_Y_gradZZ = np.zeros(FIELD_Zz.shape)
-#     FIELD_Z_gradZZ = np.zeros(FIELD_Zz.shape)
-    
-#     FIELD_X_gradXY = np.zeros(FIELD_Zz.shape)
-#     FIELD_Y_gradXY = np.zeros(FIELD_Zz.shape)
-#     FIELD_Z_gradXY = np.zeros(FIELD_Zz.shape)
-
-#     FIELD_X_gradYX = np.zeros(FIELD_Zz.shape)
-#     FIELD_Y_gradYX = np.zeros(FIELD_Zz.shape)
-#     FIELD_Z_gradYX = np.zeros(FIELD_Zz.shape)
-
-#     FIELD_X_gradYZ = np.zeros(FIELD_Zz.shape)
-#     FIELD_Y_gradYZ = np.zeros(FIELD_Zz.shape)
-#     FIELD_Z_gradYZ = np.zeros(FIELD_Zz.shape)
-
-#     FIELD_X_gradXZ = np.zeros(FIELD_Zz.shape)
-#     FIELD_Y_gradXZ = np.zeros(FIELD_Zz.shape)
-#     FIELD_Z_gradXZ = np.zeros(FIELD_Zz.shape)
-    
-#     for pos in range(1, nrx-1):
-#         FIELD_X_gradXX[pos,:,:,:] = (FIELD_Xx[pos+1,:,:,:] - FIELD_Xx[pos-1,:,:,:])/(2*dx)
-#         FIELD_Y_gradXX[pos,:,:,:] = (FIELD_Yx[pos+1,:,:,:] - FIELD_Yx[pos-1,:,:,:])/(2*dx)
-#         FIELD_Z_gradXX[pos,:,:,:] = (FIELD_Zx[pos+1,:,:,:] - FIELD_Zx[pos-1,:,:,:])/(2*dx)
-        
-#         FIELD_X_gradYX[pos,:,:,:] = (FIELD_Xy[pos+1,:,:,:] - FIELD_Xy[pos-1,:,:,:])/(2*dx)
-#         FIELD_Y_gradYX[pos,:,:,:] = (FIELD_Yy[pos+1,:,:,:] - FIELD_Yy[pos-1,:,:,:])/(2*dx)
-#         FIELD_Z_gradYX[pos,:,:,:] = (FIELD_Zy[pos+1,:,:,:] - FIELD_Zy[pos-1,:,:,:])/(2*dx)
-        
-#     for pos in range(1, nry-1):
-#         FIELD_X_gradYY[:,pos,:,:] = (FIELD_Xy[:,pos+1,:,:] - FIELD_Xy[:,pos-1,:,:])/(2*dy)
-#         FIELD_Y_gradYY[:,pos,:,:] = (FIELD_Yy[:,pos+1,:,:] - FIELD_Yy[:,pos-1,:,:])/(2*dy)
-#         FIELD_Z_gradYY[:,pos,:,:] = (FIELD_Zy[:,pos+1,:,:] - FIELD_Zy[:,pos-1,:,:])/(2*dy)
-        
-#         FIELD_X_gradXY[:,pos,:,:] = (FIELD_Xx[:,pos+1,:,:] - FIELD_Xx[:,pos-1,:,:])/(2*dy)
-#         FIELD_Y_gradXY[:,pos,:,:] = (FIELD_Yx[:,pos+1,:,:] - FIELD_Yx[:,pos-1,:,:])/(2*dy)
-#         FIELD_Z_gradXY[:,pos,:,:] = (FIELD_Zx[:,pos+1,:,:] - FIELD_Zx[:,pos-1,:,:])/(2*dy)
-        
-#     for pos in range(1, nrz-1):
-#         FIELD_X_gradZZ[:,:,pos,:] = (-FIELD_Xz[:,:,pos+1,:] + FIELD_Xz[:,:,pos-1,:])/(2*dz)
-#         FIELD_Y_gradZZ[:,:,pos,:] = (-FIELD_Yz[:,:,pos+1,:] + FIELD_Yz[:,:,pos-1,:])/(2*dz)
-#         FIELD_Z_gradZZ[:,:,pos,:] = (-FIELD_Zz[:,:,pos+1,:] + FIELD_Zz[:,:,pos-1,:])/(2*dz)
-        
-#         FIELD_X_gradYZ[:,:,pos,:] = (-FIELD_Xy[:,:,pos+1,:] + FIELD_Xy[:,:,pos-1,:])/(2*dz)
-#         FIELD_Y_gradYZ[:,:,pos,:] = (-FIELD_Yy[:,:,pos+1,:] + FIELD_Yy[:,:,pos-1,:])/(2*dz)
-#         FIELD_Z_gradYZ[:,:,pos,:] = (-FIELD_Zy[:,:,pos+1,:] + FIELD_Zy[:,:,pos-1,:])/(2*dz)
-        
-#         FIELD_X_gradXZ[:,:,pos,:] = (-FIELD_Xx[:,:,pos+1,:] + FIELD_Xx[:,:,pos-1,:])/(2*dz)
-#         FIELD_Y_gradXZ[:,:,pos,:] = (-FIELD_Yx[:,:,pos+1,:] + FIELD_Yx[:,:,pos-1,:])/(2*dz)
-#         FIELD_Z_gradXZ[:,:,pos,:] = (-FIELD_Zx[:,:,pos+1,:] + FIELD_Zx[:,:,pos-1,:])/(2*dz)
-        
-        
-#     return FIELD_X_gradXX, FIELD_Y_gradXX, FIELD_Z_gradXX, FIELD_X_gradYY, FIELD_Y_gradYY, FIELD_Z_gradYY, FIELD_X_gradZZ,\
-#            FIELD_Y_gradZZ, FIELD_Z_gradZZ, FIELD_X_gradXY, FIELD_Y_gradXY, FIELD_Z_gradXY, FIELD_X_gradYX, FIELD_Y_gradYX,\
-#            FIELD_Z_gradYX, FIELD_X_gradYZ, FIELD_Y_gradYZ, FIELD_Z_gradYZ, FIELD_X_gradXZ, FIELD_Y_gradXZ, FIELD_Z_gradXZ
-# -
 
 
 
